@@ -106,6 +106,7 @@ nav h1{
 .buttons a,
 .project-links a,
 .certificate a{
+    display:inline-block;
     text-decoration:none;
     color:white;
     padding:0.9rem 1.4rem;
@@ -120,6 +121,9 @@ nav h1{
 .certificate a:hover{
     transform:translateY(-3px);
     background:rgba(255,255,255,0.15);
+}
+.certificate a{
+    margin-top:1rem;
 }
 
 main{
