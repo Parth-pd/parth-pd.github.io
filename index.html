@@ -1,158 +1,979 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Parth Dobariya | Portfolio</title>
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parth Dobariya — ECE Student & Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08090f;
+      --bg-card: #0f1117;
+      --bg-card2: #13141e;
+      --text: #f0ede8;
+      --muted: #64748b;
+      --muted2: #94a3b8;
+      --amber: #fbbf24;
+      --amber-dim: rgba(251,191,36,0.12);
+      --border: #1e2030;
+      --border2: #2a2b3a;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--amber); color: #000; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 6%;
+      background: rgba(8,9,15,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .nav-logo .prompt { color: var(--amber); margin-right: 4px; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+      font-family: var(--mono);
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--amber);
+      border: 1px solid var(--amber);
+      padding: 0.45rem 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--amber);
+      color: #000;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 6% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-prompt {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-prompt::before {
+      content: '>';
+      color: var(--amber);
+    }
+
+    .hero-name {
+      font-family: var(--mono);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .hero-role-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 500;
+      color: var(--muted2);
+      margin-bottom: 2rem;
+      min-height: 2rem;
+    }
+
+    .typewriter-text { color: var(--amber); }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: var(--amber);
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border2);
+      color: var(--muted2);
+      background: var(--bg-card);
+    }
+    .badge.amber { border-color: rgba(251,191,36,0.3); color: var(--amber); }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-amber {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--amber);
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-amber:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-outline {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: transparent;
+      color: var(--muted2);
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border2);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+    /* grid bg */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 6%; border-top: 1px solid var(--border); }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+    }
+
+    .sec-title {
+      font-family: var(--mono);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .sec-sub {
+      color: var(--muted);
+      max-width: 520px;
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      padding: 1.5rem;
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    /* ── SKILLS ── */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group { }
+
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.8rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border2);
+      color: var(--muted2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--amber); color: var(--amber); }
+    .skill-tag.primary { border-color: rgba(251,191,36,0.3); color: var(--amber); background: var(--amber-dim); }
+
+    /* ── projects ── */
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+      max-width: 700px;
+    }
+    .project-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-2px);
+    }
+
+    .project-card::before {
+      content: 'FEATURED';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--amber);
+      border: 1px solid rgba(251,191,36,0.3);
+      padding: 0.2rem 0.5rem;
+    }
+
+    .project-name {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      color: var(--muted2);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      max-width: 500px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── profiles ── */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      padding: 1.5rem;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-card:hover {
+      border-color: var(--amber);
+      transform: translateY(-2px);
+    }
+    .profile-card::after {
+      content: '↗';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .profile-card:hover::after { color: var(--amber); }
+
+    .profile-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+
+    .profile-name {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .profile-handle {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── CERT ── */
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      padding: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      max-width: 600px;
+      transition: border-color 0.2s;
+    }
+    .cert-card:hover { border-color: var(--amber); }
+
+    .cert-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    .cert-issuer {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--amber);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .cert-name {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .cert-link {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--amber);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-bottom: 1px solid rgba(251,191,36,0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .cert-link:hover { border-color: var(--amber); }
+
+    /* ── contact ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-email-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--muted2);
+    }
+    .contact-email-box a { color: var(--amber); transition: opacity 0.2s; }
+    .contact-email-box a:hover { opacity: 0.7; }
+
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      padding: 2rem;
+    }
+
+    .form-row { margin-bottom: 1rem; }
+
+    .form-row label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      resize: none;
+      transition: border-color 0.2s;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus { border-color: var(--amber); }
+    .form-row input::placeholder,
+    .form-row textarea::placeholder { color: #2a2b3a; }
+
+    .btn-send {
+      width: 100%;
+      background: var(--amber);
+      color: #000;
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-send:hover { opacity: 0.88; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .footer-left span { color: var(--amber); }
+
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name { letter-spacing: -2px; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor { animation: none; opacity: 1; }
+      * { transition: none !important; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="bg-glow glow1"></div>
-    <div class="bg-glow glow2"></div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo"><span class="prompt">~$</span> parth.dobariya</div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#profiles">profiles</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">say_hello()</a>
+  </nav>
 
-    <header>
-        <nav>
-            <h1>Parth.</h1>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#profiles">Profiles</a>
-            </div>
-        </nav>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
 
-        <section class="hero">
-            <p class="intro">ECE Student @ IIIT Surat</p>
-            <h2>Python • DSA • Competitive Programming • Backend Development</h2>
-            <p class="hero-desc">
-                Building projects, learning in public, and improving every day through coding,
-                development, and problem solving.
-            </p>
+    <p class="hero-prompt">ECE Student @ IIIT Surat · Batch 2029</p>
+    <h1 class="hero-name">Parth<br>Dobariya.</h1>
 
-            <div class="buttons">
-                <a href="https://github.com/Parth-pd" target="_blank">GitHub</a>
-                <a href="https://leetcode.com/u/parth-pd/" target="_blank">LeetCode</a>
-                <a href="https://codeforces.com/profile/parth-pd" target="_blank">Codeforces</a>
-            </div>
-        </section>
-    </header>
-
-    <main>
-
-        <section id="about" class="card">
-            <h3>About Me</h3>
-            <p>
-                Hey, I'm Parth Dobariya — an ECE student at IIIT Surat passionate about Python,
-                backend development, DSA, and competitive programming.
-            </p>
-
-            <p>
-                I enjoy building projects while continuously improving my problem solving and
-                development skills. Currently exploring Flask, Django, Git/GitHub, and modern web development.
-            </p>
-        </section>
-
-        <section id="skills" class="card">
-            <h3>Skills</h3>
-
-            <div class="skill-grid">
-                <span>Python</span>
-                <span>Flask</span>
-                <span>Django</span>
-                <span>Git/GitHub</span>
-                <span>SQLite3</span>
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-                <span>DSA</span>
-                <span>Competitive Programming</span>
-            </div>
-        </section>
-
-        <section id="projects" class="card">
-            <h3>Featured Project</h3>
-
-            <div class="project">
-                <div>
-                    <h4>MarksMind</h4>
-                    <p>
-                        A Flask-based academic management web application designed to help students
-                        manage academic workflows and organize important information efficiently.
-                    </p>
-
-                    <div class="tech">
-                        <span>Python</span>
-                        <span>Flask</span>
-                        <span>SQLite3</span>
-                        <span>HTML/CSS</span>
-                    </div>
-
-                    <div class="project-links">
-                        <a href="https://marksmind.pythonanywhere.com/" target="_blank">Live Demo</a>
-                        <a href="https://github.com/Parth-pd/MarksMind" target="_blank">GitHub Repo</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="profiles" class="card">
-            <h3>Coding Profiles</h3>
-
-            <div class="profile-grid">
-
-                <a class="profile-card" href="https://github.com/Parth-pd" target="_blank">
-                    <h4>GitHub</h4>
-                    <p>Projects, consistency, and coding journey.</p>
-                </a>
-
-                <a class="profile-card" href="https://leetcode.com/u/parth-pd/" target="_blank">
-                    <h4>LeetCode</h4>
-                    <p>DSA practice and problem solving.</p>
-                </a>
-
-                <a class="profile-card" href="https://codeforces.com/profile/parth-pd" target="_blank">
-                    <h4>Codeforces</h4>
-                    <p>Competitive programming journey.</p>
-                </a>
-
-            </div>
-        </section>
-
-        <section class="card">
-            <h3>Certificate</h3>
-
-            <div class="certificate">
-                <h4>CS50x — Harvard University</h4>
-                <p>Completed Harvard's CS50x Introduction to Computer Science.</p>
-
-                <a href="https://cs50.harvard.edu/certificates/6baab15e-a31c-4060-8fbb-817dcf42558b" target="_blank">
-                    View Certificate
-                </a>
-            </div>
-        </section>
-
-        <section class="card">
-    <h3>Contact</h3>
-
-    <div class="contact-section">
-        <p>
-            Feel free to reach out regarding projects, collaboration, or just to connect.
-        </p>
-        <a href="mailto:parth.dobariya.5127@gmail.com">
-            parth.dobariya.5127@gmail.com
-        </a>
+    <div class="hero-role-line">
+      <span class="typewriter-text" id="typewriter"></span>
+      <span class="cursor"></span>
     </div>
-</section>
 
-    </main>
+    <p class="hero-desc">
+      Building things with Python, solving problems through code, and learning in public. 
+      Currently focused on backend development, DSA, and competitive programming.
+    </p>
 
-    <footer>
-        <p>Parth Dobariya • Backend & Problem Solving</p>
-    </footer>
+    <div class="hero-badges">
+      <span class="badge amber">Python</span>
+      <span class="badge">Flask</span>
+      <span class="badge">DSA</span>
+      <span class="badge">Codeforces</span>
+      <span class="badge">CS50x ✓</span>
+    </div>
 
+    <div class="hero-links">
+      <a href="https://github.com/Parth-pd" target="_blank" rel="noreferrer" class="btn-amber">
+        GitHub ↗
+      </a>
+      <a href="#projects" class="btn-outline">
+        See Projects
+      </a>
+      <a href="#contact" class="btn-outline">
+        Contact Me
+      </a>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section id="about">
+    <p class="sec-label">About</p>
+    <h2 class="sec-title">Who I am.</h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Hey — I'm <strong>Parth Dobariya</strong>, a second-year ECE student at IIIT Surat.
+          I got into coding through C, moved to Python, and haven't looked back since.
+        </p>
+        <p>
+          Right now I'm building my foundations across <strong>backend development</strong>, 
+          <strong>data structures & algorithms</strong>, and <strong>competitive programming</strong>.
+          I learn best by building real things — MarksMind was my first deployed project, and more are in progress.
+        </p>
+      </div>
+
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-num">1+</div>
+          <div class="stat-label">deployed projects</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">CS50x</div>
+          <div class="stat-label">Harvard certified</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">ECE</div>
+          <div class="stat-label">@ IIIT Surat</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- skills -->
+  <section id="skills">
+    <p class="sec-label">Skills</p>
+    <h2 class="sec-title">What I work with.</h2>
+
+    <div class="skills-layout">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Python</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Flask</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">SQLite3</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">Git / GitHub</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">PythonAnywhere</span>
+          <span class="skill-tag">Vercel</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Problem Solving</div>
+        <div class="skill-tags">
+          <span class="skill-tag primary">DSA</span>
+          <span class="skill-tag primary">Competitive Programming</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- projects -->
+  <section id="projects">
+    <p class="sec-label">Projects</p>
+    <h2 class="sec-title">What I've built.</h2>
+    <p class="sec-sub">Real projects, deployed and live. Not just tutorial clones.</p>
+
+    <div class="project-card">
+      <div class="project-name">MarksMind</div>
+      <p class="project-desc">
+        A Flask-based academic management web app for students to track and query their marks data.
+        Features LLM integration for natural language querying — ask questions about your marks in plain English
+        and get instant answers. Live on PythonAnywhere.
+      </p>
+      <div class="project-tech">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Flask</span>
+        <span class="tech-tag">SQLite3</span>
+        <span class="tech-tag">LLM API</span>
+        <span class="tech-tag">HTML/CSS</span>
+        <span class="tech-tag">PythonAnywhere</span>
+      </div>
+      <div class="project-actions">
+        <a href="https://marksmind.pythonanywhere.com/" target="_blank" rel="noreferrer" class="btn-amber">
+          Live Demo ↗
+        </a>
+        <a href="https://github.com/Parth-pd/MarksMind" target="_blank" rel="noreferrer" class="btn-outline">
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- profiles -->
+  <section id="profiles">
+    <p class="sec-label">Profiles</p>
+    <h2 class="sec-title">Find me online.</h2>
+
+    <div class="profiles-grid">
+      <a class="profile-card" href="https://github.com/Parth-pd" target="_blank" rel="noreferrer">
+        <div class="profile-icon">⌥</div>
+        <div class="profile-name">GitHub</div>
+        <div class="profile-handle">@Parth-pd</div>
+        <p class="profile-desc">Projects, source code, and my coding journey.</p>
+      </a>
+      <a class="profile-card" href="https://leetcode.com/u/parth-pd/" target="_blank" rel="noreferrer">
+        <div class="profile-icon">#</div>
+        <div class="profile-name">LeetCode</div>
+        <div class="profile-handle">@parth-pd</div>
+        <p class="profile-desc">DSA practice and problem solving grind.</p>
+      </a>
+      <a class="profile-card" href="https://codeforces.com/profile/parth-pd" target="_blank" rel="noreferrer">
+        <div class="profile-icon">∑</div>
+        <div class="profile-name">Codeforces</div>
+        <div class="profile-handle">@parth-pd</div>
+        <p class="profile-desc">Competitive programming — contests and ratings.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- CERTIFICATE -->
+  <section id="cert">
+    <p class="sec-label">Certificates</p>
+    <h2 class="sec-title">Credentials.</h2>
+
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <div class="cert-issuer">Harvard University</div>
+        <div class="cert-name">CS50x — Introduction to Computer Science</div>
+        <p class="cert-desc">
+          Completed Harvard's flagship CS50x course covering C, Python, SQL, 
+          web development, and core computer science concepts.
+        </p>
+        <a href="https://cs50.harvard.edu/certificates/6baab15e-a31c-4060-8fbb-817dcf42558b" target="_blank" rel="noreferrer" class="cert-link">
+          View Certificate ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-layout">
+      <div class="contact-left">
+        <p class="sec-label">Contact</p>
+        <h2 class="sec-title">Let's connect.</h2>
+        <p>
+          I'm open to internship opportunities, collaboration on interesting projects, 
+          or just a conversation about code and tech. Drop a message and I'll get back to you.
+        </p>
+        <div class="contact-email-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          <a href="mailto:parth.dobariya.5127@gmail.com">parth.dobariya.5127@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <label>Your Name <span style="color:#ef4444">*</span></label>
+          <input type="text" id="cName" placeholder="e.g. Rahul Sharma" />
+        </div>
+        <div class="form-row">
+          <label>Subject <span style="color:#ef4444">*</span></label>
+          <input type="text" id="cSubject" placeholder="e.g. Internship opportunity / Collaboration" />
+        </div>
+        <div class="form-row">
+          <label>Message <span style="color:#ef4444">*</span></label>
+          <textarea id="cMessage" rows="4" placeholder="Tell me what's on your mind..."></textarea>
+        </div>
+        <button class="btn-send" onclick="sendMail()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Message
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <span>~$</span> parth.dobariya · IIIT Surat · ECE '28
+    </div>
+    <div class="footer-right">Built with HTML, CSS & JS · © 2025</div>
+  </footer>
+
+  <script>
+    // Typewriter effect
+    const roles = [
+      'Python Developer',
+      'Competitive Programmer',
+      'Backend Builder',
+      'ECE Student',
+      'Problem Solver'
+    ];
+    let roleIndex = 0, charIndex = 0, deleting = false;
+    const el = document.getElementById('typewriter');
+
+    function type() {
+      const current = roles[roleIndex];
+      if (!deleting) {
+        el.textContent = current.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(type, 1800);
+          return;
+        }
+      } else {
+        el.textContent = current.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+      }
+      setTimeout(type, deleting ? 60 : 90);
+    }
+    type();
+
+    // Contact form, mailto
+    function sendMail() {
+      const name = document.getElementById('cName').value.trim();
+      const subject = document.getElementById('cSubject').value.trim();
+      const message = document.getElementById('cMessage').value.trim();
+
+      const fields = [
+        { el: document.getElementById('cName'), val: name },
+        { el: document.getElementById('cSubject'), val: subject },
+        { el: document.getElementById('cMessage'), val: message }
+      ];
+
+      let valid = true;
+      fields.forEach(f => {
+        if (!f.val) {
+          f.el.style.borderColor = '#ef4444';
+          valid = false;
+        } else {
+          f.el.style.borderColor = '';
+        }
+      });
+      if (!valid) return;
+
+      const body = `Hi Parth,\n\nI'm ${name}.\n\n${message}`;
+      const mailto = `mailto:parth.dobariya.5127@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    }
+
+    // Reset border on input
+    ['cName','cSubject','cMessage'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.style.borderColor = '';
+      });
+    });
+  </script>
 </body>
 </html>
